@@ -1,12 +1,13 @@
 <html>
 <head>
   <title>Mage VS Monsters</title>
-  <meta name="viewport" content="width=device-width, user-scalable=no" />
 
-	<script src="JavaScript/Player.js"> </script>
-	<script src="JavaScript/Enemy.js"> </script>
-  <script src="JavaScript/FireBall.js"> </script>
-  <script src="JavaScript/Keyboard.js"> </script>
+  <meta name="viewport"/>
+	<script src="JavaScript/Game.js"></script>
+	<script src="JavaScript/Entities/Player.js"> </script>
+	<script src="JavaScript/Entities/Enemy.js"> </script>
+  <script src="JavaScript/Entities/FireBall.js"> </script>
+  <script src="JavaScript/Utils/Keyboard.js"> </script>
 
   <style>
     @import url('https://fonts.googleapis.com/css?family=Press+Start+2P&display=swap');
@@ -54,13 +55,14 @@
 
   </header>
 
-  <canvas id="canvasGame" width="192" height="80" ></canvas>
+  <canvas id="canvasGame" width="180" height="320" ></canvas>
   <script>
 
 
 
     window.addEventListener("load",function() {
-
+      var game = new Game();
+      
     });
   </script>
 </body>
