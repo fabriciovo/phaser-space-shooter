@@ -1,69 +1,13 @@
-<html>
-<head>
-  <title>Mage VS Monsters</title>
-
-  <meta name="viewport"/>
-	<script src="JavaScript/Game.js"></script>
-	<script src="JavaScript/Entities/Player.js"> </script>
-	<script src="JavaScript/Entities/Enemy.js"> </script>
-  <script src="JavaScript/Entities/FireBall.js"> </script>
-  <script src="JavaScript/Utils/Keyboard.js"> </script>
-
-  <style>
-    @import url('https://fonts.googleapis.com/css?family=Press+Start+2P&display=swap');
-  </style>
-  <style>
-    canvas {
-      border: 1px solid black;
-      width: 100%;
-
-
-	    image-rendering: pixelated;
-      border-radius:1%;
-    }
-    h1{
-      font-family: 'Press Start 2P', cursive;
-
-    }
-    #score{
-      font-family: 'Press Start 2P', cursive;
-      text-align: justify;
-      float: none; 
-    }
-    #start{
-      font-family: 'Press Start 2P', cursive;
-      float: none;
-    }
-    #text{
-      font-family: 'Press Start 2P', cursive;
-      float: none;
-    }
-    body{
-      background-color: #3f3f74;
-    }
-
-  </style>
-</head>
-<body>
-  <header>
-    <div id="score">
-        <h4>Score: 0</h4>
-    </div>
-    <div id="start">
-      <h4>Press ENTER to start</h4>
-  </div>
-
-  </header>
-
-  <canvas id="canvasGame" width="180" height="320" ></canvas>
-  <script>
-
-
-
-    window.addEventListener("load",function() {
-      var game = new Game();
-      
-    });
-  </script>
-</body>
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/svg+xml" href="favicon.svg" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Space Shooter</title>
+  </head>
+  <body>
+    <div id="app"></div>
+    <script type="module" src="/src/index.js"></script>
+  </body>
 </html>
