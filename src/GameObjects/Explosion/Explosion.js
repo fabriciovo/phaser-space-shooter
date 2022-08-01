@@ -3,7 +3,7 @@ class Explosion extends Phaser.Physics.Arcade.Sprite {
     constructor(scene, x, y, key, frame,) {
       super(scene, x, y, key, frame);
       this.scene = scene;
-      this.setScale(6);
+      this.setScale(4);
       this.setOrigin(0,0)
       this.setDepth(8)
       this.scene.add.existing(this);

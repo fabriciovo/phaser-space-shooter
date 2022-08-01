@@ -71,25 +71,23 @@ class GameScene extends Phaser.Scene {
         })
     }
 
-    destroyPlayer(player, enemy) {
-        player.destroy()
-        player.body = null
+    playerCollision(player, enemy) {
+        this.cameras.main.shake(200);
 
-        this.scene.start("GameOver")
+        player.hit(enemy.damage)
     }
 
-    destroyEnemy(bullet, enemy) {
-        enemy.destroy()
-        enemy.body = null
+    enemyCollision(bullet, enemy) {
+        enemy.hit(this.player.damage)
+        
         bullet.destroy()
-        bullet.body = null
     }
 
     addCollisions() {
         this.physics.add.overlap(
             this.player,
             this.enemies,
-            this.destroyPlayer,
+            this.playerCollision,
             null,
             this
         );
@@ -97,7 +95,7 @@ class GameScene extends Phaser.Scene {
         this.physics.add.overlap(
             this.player.bullets,
             this.enemies,
-            this.destroyEnemy,
+            this.enemyCollision,
             null,
             this
         );

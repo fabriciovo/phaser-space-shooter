@@ -2,7 +2,7 @@ import * as Phaser from "phaser";
 import Bullet from "../Bullet/Bullet";
 import Explosion from "../Explosion/Explosion";
 
-class Enemy extends Phaser.Physics.Arcade.Sprite {
+class EnemySmall extends Phaser.Physics.Arcade.Sprite {
   constructor(scene, x, y, key, frame,) {
     super(scene, x, y, key, frame);
     this.scene = scene;
@@ -72,4 +72,4 @@ class Enemy extends Phaser.Physics.Arcade.Sprite {
 
 }
 
-export default Enemy
+export default EnemySmall
