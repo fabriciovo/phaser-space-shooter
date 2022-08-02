@@ -1,7 +1,8 @@
 import Phaser from "phaser";
 import Background from "../GameObjects/Background/Background";
 import Bullet from "../GameObjects/Bullet/Bullet";
-import Enemy from "../GameObjects/Enemy/Enemy";
+import EnemySmall from "../GameObjects/Enemy/EnemySmall";
+import Enemy from "../GameObjects/Enemy/EnemySmall";
 import Explosion from "../GameObjects/Explosion/Explosion";
 import Player from "../GameObjects/Player/Player";
 import CloudSpawner from "../GameObjects/Spawner/CloudSpawner";
@@ -24,7 +25,7 @@ class GameScene extends Phaser.Scene {
     }
 
     preload() {
-        this.bg = new Background(this, 0, 0, this.game.config.width, this.game.config.height, "desert-backgorund")
+        this.bg = new Background(this, 0, 0, this.game.config.width, this.game.config.height, "desert-backgorund",0,200)
         this.player = new Player(this, 50, 25, "player", 0)
         this.clouds = new CloudSpawner(this);
         this.explosion = new Explosion(this, 50, 40, "explosion", 0)
@@ -56,7 +57,7 @@ class GameScene extends Phaser.Scene {
     spawnEnemies() {
         if (this.time.now > this.nextEnemy) {
             this.nextEnemy = this.time.now + this.enemyRate;
-            this.enemies.add(new Enemy(this, Phaser.Math.Between(0, this.game.config.width), -250, "enemy-small", 0, 3, 3,1,Phaser.Math.Between(-250,-350)))
+            this.enemies.add(new EnemySmall(this, Phaser.Math.Between(0, this.game.config.width), -250, "enemy-small", 0, 3, 3,1,Phaser.Math.Between(-250,-350)))
         }
     }
 
@@ -73,7 +74,6 @@ class GameScene extends Phaser.Scene {
 
     playerCollision(player, enemy) {
         this.cameras.main.shake(200);
-
         player.hit(enemy.damage)
     }
 

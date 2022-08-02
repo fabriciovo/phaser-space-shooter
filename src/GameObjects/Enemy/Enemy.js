@@ -32,10 +32,10 @@ class Enemy extends Phaser.Physics.Arcade.Sprite {
   update() {
     if(!this.body) return
     this.body.setVelocityY(this.velocity)
-    this.power()
-    this.bullets.getChildren().forEach(bullet => {
-      bullet.update()
-  });
+    //this.power()
+//     this.bullets.getChildren().forEach(bullet => {
+//       bullet.update()
+//   });
   }
 
   power() {

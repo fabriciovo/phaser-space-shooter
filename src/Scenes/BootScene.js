@@ -16,7 +16,8 @@ class BootScene extends Phaser.Scene {
 		this.load.image('clouds', 'assets/clouds.png');
 
 		//Font
-		//this.load.bitmapFont('font', 'assets/fonts/bitmap/desyrel-pink.png', 'assets/fonts/bitmap/desyrel-pink.xml');
+		this.load.bitmapFont('vermin', 'font/vermin.png', 'font/vermin.xml');
+
 
 
 	}
