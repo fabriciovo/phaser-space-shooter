@@ -3,47 +3,31 @@ import Bullet from "../Bullet/Bullet";
 import Explosion from "../Explosion/Explosion";
 
 class Enemy extends Phaser.Physics.Arcade.Sprite {
-  constructor(scene, x, y, key, frame,) {
+  constructor(scene, x, y, key, frame, damage, life, velocity) {
     super(scene, x, y, key, frame);
     this.scene = scene;
     this.scene.physics.world.enable(this);
     this.setImmovable(true);
-    this.setOrigin(0,0)
+    this.setOrigin(0, 0)
     this.setScale(3);
     this.scene.add.existing(this);
     this.key = key;
 
-    this.life = 3
-    this.damage = 3;
-    this.fireRate = 350;
-    this.nextFire = 0;
-    this.velocity = Phaser.Math.Between(250, 450)
+    this.life = life
+    this.damage = damage;
+    this.velocity = velocity
 
     this.bullets = undefined;
     this.animation()
-    this.createBullet()
-  }
-
-  createBullet(){
-    this.bullets = this.scene.physics.add.group();
-    this.bullets.runChildUpdate = true 
   }
 
   update() {
-    if(!this.body) return
+    if (!this.body) return
     this.body.setVelocityY(this.velocity)
-    //this.power()
-//     this.bullets.getChildren().forEach(bullet => {
-//       bullet.update()
-//   });
+
   }
 
-  power() {
-    if (this.scene.time.now > this.nextFire) {
-      this.nextFire = this.scene.time.now + this.fireRate;
-      this.bullets.add(new Bullet(this.scene,this.x,this.y,'laser-bolts',0, 550))
-    }
-  }
+
 
   animation() {
     this.anims.create({
@@ -55,18 +39,47 @@ class Enemy extends Phaser.Physics.Arcade.Sprite {
     this.play('enemy-small-anim')
   }
 
-  hit(value){
+  hit(value) {
     const damegeValaue = this.life - value;
-    if(damegeValaue <= 0){
+    if (damegeValaue <= 0) {
       this._destroy()
-    }else{
+    } else {
+      this._flash()
       this.life = damegeValaue
     }
   }
 
-  _destroy(){
-    const createExplosion = new Explosion(this.scene,this.x,this.y,'explosion',0)
+  _destroy() {
+    const createExplosion = new Explosion(this.scene, this.x, this.y, 'explosion', 0)
     this.destroy()
+  }
+
+  _flash() {
+    const startColor = Phaser.Display.Color.ValueToColor(0xffffff)
+    const endColor = Phaser.Display.Color.ValueToColor(0xff00000)
+    this.scene.tweens.add({
+      targets: this,
+      from: 0,
+      to: 100,
+      duration: 40,
+      yoyo: true,
+      ease: Phaser.Math.Easing.Sine.InOut,
+      onUpdate: tween => {
+        const value = tween.getValue();
+        const colorObject = Phaser.Display.Color.Interpolate.ColorWithColor(
+          startColor,
+          endColor,
+          100,
+          value
+        )
+        const color = Phaser.Display.Color.GetColor(
+          colorObject.r,
+          colorObject.g,
+          colorObject.b,
+        )
+        this.setTint(color)
+      }
+    })
   }
 
 

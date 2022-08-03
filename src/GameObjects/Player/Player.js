@@ -12,8 +12,10 @@ class Player extends Phaser.Physics.Arcade.Sprite {
     this.setDepth(5)
     this.scene.add.existing(this);
     this.key = key;
+    
     this.life = 3
-
+    this.score = 0;
+    this.exp = 0;
     this.fireRate = 350;
     this.nextFire = 0;
     this.damage = 1
@@ -45,9 +47,7 @@ class Player extends Phaser.Physics.Arcade.Sprite {
   movement() {
     this.body.setVelocity(0);
     if (this.cursors.left.isDown) {
-      console.log(this.cursors)
 
-      console.log(this.cursors.left)
       this.body.setVelocityX(-250);
     } else if (this.cursors.right.isDown) {
       this.body.setVelocityX(250);

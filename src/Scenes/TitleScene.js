@@ -29,7 +29,7 @@ class TitleScene extends Phaser.Scene {
 
     }
     actionOnClick() {
-        this.cameras.main.flash(400)
+        this.cameras.main.flash().on
         this.scene.start("GameScene")
     }
 

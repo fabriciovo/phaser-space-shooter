@@ -1,23 +1,16 @@
 import Enemy from "./Enemy";
 
 class EnemySmall extends Enemy {
-  constructor(scene, x, y, key, frame,) {
-    super(scene, x, y, key, frame);
+  constructor(scene, x, y, key, frame,damage, life, fireRate, velocity) {
+    super(scene, x, y, key, frame, damage, life, fireRate, velocity);
     
   }
 
-  createBullet(){
-
-  }
 
   update() {
     super.update()
   }
 
-  power() {
-    super.power()
-
-  }
 
   animation() {
     super.animation()
