@@ -73,7 +73,17 @@ class GameScene extends Phaser.Scene {
         if (this.time.now > this.nextEnemy) {
             this.nextEnemy = this.time.now + this.enemyRate;
             this.enemies.add(new EnemySmall(this, Phaser.Math.Between(0, this.game.config.width), -250, "enemy-small", 0, 1, 3, Phaser.Math.Between(250, 450)))
-            this.enemies.add(new EnemyMedium(this, Phaser.Math.Between(0, this.game.config.width), -250, "enemy-small", 0, 1, 3, Phaser.Math.Between(250, 450), 350))
+
+            const enemyMedium = new EnemyMedium(this, Phaser.Math.Between(0, this.game.config.width), -250, "enemy-small", 0, 1, 3, Phaser.Math.Between(250, 450), 350)
+            this.enemies.add(enemyMedium)
+
+            this.physics.add.overlap(
+                this.player,
+                enemyMedium.bullets,
+                this.playerBulletCollision,
+                null,
+                this
+            );
         }
     }
 
@@ -121,13 +131,7 @@ class GameScene extends Phaser.Scene {
             this
         );
 
-        this.physics.add.overlap(
-            this.player,
-            this.enemies,
-            this.playerBulletCollision,
-            null,
-            this
-        );
+
 
         this.physics.add.overlap(
             this.player.bullets,

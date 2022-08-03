@@ -97,12 +97,11 @@ class Player extends Phaser.Physics.Arcade.Sprite {
   }
 
   hit(value){
-    const damegeValaue = this.life - value;
+    const damegeValaue = this.life - value
     if(damegeValaue <= 0){
       this.destroy()
-    }else{
-      this.life = damegeValaue
     }
+    this.life = damegeValaue
   }
 
 }
