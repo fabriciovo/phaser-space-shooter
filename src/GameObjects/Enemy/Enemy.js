@@ -10,47 +10,61 @@ class Enemy extends Phaser.Physics.Arcade.Sprite {
     this.setImmovable(true);
     this.setOrigin(0, 0)
     this.setScale(3);
+    this.setDepth(3)
     this.scene.add.existing(this);
     this.key = key;
 
     this.life = life
     this.damage = damage;
     this.velocity = velocity
-
+    this.dead = false
     this.bullets = undefined;
     this.animation()
+
+
+    this.scene.time.addEvent({
+      delay: 5000,
+      callback: () => { 
+        this.body = null
+        this.destroy() },
+      args: [],
+      loop: false,
+      repeat: 0,
+      startAt: 0,
+      timeScale: 1,
+      paused: false
+    });
   }
 
   update() {
     if (!this.body) return
     this.body.setVelocityY(this.velocity)
-
   }
-
-
 
   animation() {
     this.anims.create({
-      key: 'enemy-small-anim',
-      frames: this.anims.generateFrameNumbers('enemy-small', { frames: [0, 1] }),
+      key: `${this.key}-anim`,
+      frames: this.anims.generateFrameNumbers(this.key, { frames: [0, 1] }),
       frameRate: 8,
       repeat: -1
     });
-    this.play('enemy-small-anim')
+    this.play(`${this.key}-anim`)
   }
 
   hit(value) {
     const damegeValaue = this.life - value;
+    this._flash()
     if (damegeValaue <= 0) {
       this._destroy()
     } else {
-      this._flash()
+
       this.life = damegeValaue
     }
   }
 
   _destroy() {
     const createExplosion = new Explosion(this.scene, this.x, this.y, 'explosion', 0)
+    this.dead = true;
     this.destroy()
   }
 

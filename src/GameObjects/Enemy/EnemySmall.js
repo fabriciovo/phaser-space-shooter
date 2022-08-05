@@ -1,9 +1,9 @@
 import Enemy from "./Enemy";
 
 class EnemySmall extends Enemy {
-  constructor(scene, x, y, key, frame,damage, life, fireRate, velocity) {
+  constructor(scene, x, y, key, frame, damage, life, fireRate, velocity) {
     super(scene, x, y, key, frame, damage, life, fireRate, velocity);
-    
+
   }
 
 
@@ -16,12 +16,12 @@ class EnemySmall extends Enemy {
     super.animation()
   }
 
-  hit(value){
+  hit(value) {
     super.hit(value)
 
   }
 
-  _destroy(){
+  _destroy() {
     super._destroy()
   }
 

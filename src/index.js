@@ -1,5 +1,6 @@
 import TitleScene from "./Scenes/TitleScene";
 import GameScene from "./Scenes/GameScene";
+import GameOverScene from "./Scenes/GameOverScene";
 import BootScene from "./Scenes/BootScene";
 
 const config = {
@@ -10,7 +11,7 @@ const config = {
     default: "arcade",
     arcade: {
       gravity: { y: 0 },
-      debug: true
+      debug: false
     },
   },
   scale: {
@@ -25,6 +26,7 @@ class Game extends Phaser.Game {
     this.scene.add('BootScene', BootScene, false);
     this.scene.add('TitleScene', TitleScene, false);
     this.scene.add('GameScene', GameScene, false);
+    this.scene.add('GameOverScene', GameOverScene, false);
     this.scene.start('BootScene');
   }
 

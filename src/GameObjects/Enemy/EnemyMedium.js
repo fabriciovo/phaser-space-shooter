@@ -28,7 +28,7 @@ class EnemyMedium extends Enemy {
   power() {
     if (this.scene.time.now > this.nextFire) {
       this.nextFire = this.scene.time.now + this.fireRate;
-      this.bullets.add(new Bullet(this.scene, this.x, this.y, 'laser-bolts', 0, 550))
+      this.bullets.add(new Bullet(this.scene, this.x+20, this.y, 'laser-bolts', 0, 550))
     }
   }
 
