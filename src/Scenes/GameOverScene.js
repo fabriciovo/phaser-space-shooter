@@ -20,8 +20,8 @@ class GameOverScene extends Phaser.Scene {
 	}
 	actionOnClick() {
 		this.cameras.main.flash().on
-		var theOtherScene = this.scene.get('GameScene');
-		theOtherScene.restart();
+
+		this.scene.start("GameScene")
 	}
 
 	update(time, delta) {

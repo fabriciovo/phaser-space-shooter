@@ -25,6 +25,7 @@ class Player extends Phaser.Physics.Arcade.Sprite {
     this.speed = 250
     this.doubleBullets = false
     this.bullets = undefined;
+    this.bulletSpeed = -450;
     this.createInput()
     this.createBullet()
     this.animations()
@@ -76,10 +77,10 @@ class Player extends Phaser.Physics.Arcade.Sprite {
 
 
       if (!this.doubleBullets) {
-        this.bullets.add(new Bullet(this.scene, this.x, this.y, 'laser-bolts', 2, -450))
+        this.bullets.add(new Bullet(this.scene, this.x, this.y, 'laser-bolts', 2, this.bulletSpeed))
       } else {
-        this.bullets.add(new Bullet(this.scene, this.x - 13, this.y, 'laser-bolts', 2, -450))
-        this.bullets.add(new Bullet(this.scene, this.x + 13, this.y, 'laser-bolts', 2, -450))
+        this.bullets.add(new Bullet(this.scene, this.x - 13, this.y, 'laser-bolts', 2, this.bulletSpeed))
+        this.bullets.add(new Bullet(this.scene, this.x + 13, this.y, 'laser-bolts', 2, this.bulletSpeed))
       }
     }
   }
@@ -120,27 +121,29 @@ class Player extends Phaser.Physics.Arcade.Sprite {
     this.life = damegeValaue
   }
   updateLevel(level) {
-    if (this.level < 6) {
-      this.level += level;
-
-      if (this.level === 2) {
-        this.doubleBullets = true
-      }
-      if (this.level === 3) {
-        this.fireRate = 350
-      } else if (this.level === 3) {
-        this.speed = 250;
-        this.fireRate = 150
-      } else if (this.level === 4) {
-        this.speed = 350;
-        this.damage = 1;
-      } else if (this.level === 5) {
-        this.damage = 2;
-      }
-      else if (this.level === 6) {
-        this.life++;
-      }
+    this.level += level;
+    console.log(this.level)
+    if (this.level === 2) {
+      this.doubleBullets = true
+      this.fireRate = 350
+      this.bulletSpeed = -450
     }
+    if (this.level === 3) {
+      this.fireRate = 150
+      this.speed = 350;
+      this.bulletSpeed = -640
+    } else if (this.level === 3) {
+      this.speed = 200;
+      this.damage = 1;
+    } else if (this.level === 4) {
+      this.damage = 2;
+    } else if (this.level === 5) {
+      this.damage = 3;
+    }
+    else if (this.level >= 6) {
+      this.life++;
+    }
+
   }
 
 

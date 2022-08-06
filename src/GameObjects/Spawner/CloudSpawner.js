@@ -1,5 +1,3 @@
-import Phaser from "phaser";
-
 export default class CloudSpawner {
     constructor(scene) {
         this.scene = scene;

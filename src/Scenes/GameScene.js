@@ -14,8 +14,10 @@ class GameScene extends Phaser.Scene {
         this.cloudRate = 5000;
         this.nextCloud = 0;
 
-        this.enemyRate = 3000;
-        this.nextEnemy = 0;
+        this.enemyMediumRate = 5000;
+        this.nextEnemyMedium = 0;
+        this.enemySmallRate = 2000;
+        this.nextEnemySmall = 0;
         this.nextPowerUp = 3000;
         this.nextWave = 10000;
         this.waveRate = 10000;
@@ -38,14 +40,13 @@ class GameScene extends Phaser.Scene {
 
     preload() {
         this.bg = new Background(this, 0, 0, this.game.config.width, this.game.config.height, "desert-backgorund", 0, 200)
-        this.player = new Player(this, this.game.config.width / 2, this.game.config.height /2, "player", 0)
+        this.player = new Player(this, this.game.config.width / 2, this.game.config.height / 2, "player", 0)
         this.clouds = new CloudSpawner(this);
-        this.explosion = new Explosion(this, 50, 40, "explosion", 0)
 
         //Text
         this.playerLife = this.add.bitmapText(0, 0, 'vermin', 'Life: ' + this.player.life, 48, 0).setDepth(20);
         this.score = this.add.bitmapText(this.game.config.width - 220, 0, 'vermin', 'Score: ' + this.player.score, 48, 0).setDepth(20);
-
+        this.wave = 1;
 
 
 
@@ -86,21 +87,21 @@ class GameScene extends Phaser.Scene {
 
     spawnPowerUps() {
         if (this.time.now > this.nextPowerUp) {
-            this.nextPowerUp = this.time.now + Phaser.Math.Between(3000, 5000);
+            this.nextPowerUp = this.time.now + Phaser.Math.Between(3000 / this.wave, 5000 / this.wave);
             this.powerUps.add(new PowerUp(this, Phaser.Math.Between(0, this.game.config.width), -250, "power-up", 0))
         }
     }
 
-    spawnEnemies() {
-        if (this.time.now > this.nextEnemy) {
+    spawnEnemyMedium() {
+        if (this.time.now > this.nextEnemyMedium) {
 
-            this.nextEnemy = this.time.now + this.enemyRate;
+            this.nextEnemyMedium = this.wave >= 3 ? this.time.now + 1000 : this.time.now + this.enemyMediumRate;
 
 
             for (var i = 0; i < this.wave; i++) {
-                this.enemies.add(new EnemySmall(this, Phaser.Math.Between(0, this.game.config.width), -250, "enemy-small", 0, 1, 2, Phaser.Math.Between(250, 450)))
-
-                const enemyMedium = new EnemyMedium(this, Phaser.Math.Between(0, this.game.config.width), -250, "enemy-medium", 0, 2, 4, Phaser.Math.Between(250, 450), 350)
+                const life = Phaser.Math.Between(1, this.wave + 4)
+                const damage = Phaser.Math.Between(1, this.wave + 2)
+                const enemyMedium = new EnemyMedium(this, Phaser.Math.Between(0, this.game.config.width), -250, "enemy-medium", 0, damage, life, Phaser.Math.Between(250, 450), 350)
 
                 this.enemies.add(enemyMedium)
 
@@ -112,17 +113,29 @@ class GameScene extends Phaser.Scene {
                     this
                 );
             }
-
-
         }
     }
+    spawnEnemySmall() {
+        if (this.time.now > this.nextEnemySmall) {
+            this.nextEnemySmall = this.time.now + this.enemySmallRate;
+            for (var i = 0; i < this.wave; i++) {
+                const life = Phaser.Math.Between(1, this.wave + 1)
+                const damage = Phaser.Math.Between(1, this.wave + 1)
+
+                this.enemies.add(new EnemySmall(this, Phaser.Math.Between(0, this.game.config.width), -250, "enemy-small", 0, damage, life, Phaser.Math.Between(250 * this.wave, 450 * this.wave)))
+            }
+        }
+    }
+
+
 
     update(time, delta) {
         this.player.update()
         this.bg.update(delta)
         this.spawnClouds()
         this.spawnPowerUps()
-        this.spawnEnemies();
+        this.spawnEnemySmall();
+        this.spawnEnemyMedium();
         this.updateTexts()
         this.updateWave();
         this.enemies.getChildren().forEach((enemy) => {
@@ -132,6 +145,10 @@ class GameScene extends Phaser.Scene {
         this.powerUps.getChildren().forEach((powerup) => {
             powerup.update()
         })
+
+        if (this.player.dead) {
+            this.gameOver();
+        }
     }
 
     updateTexts() {
@@ -147,7 +164,7 @@ class GameScene extends Phaser.Scene {
 
     playerBulletCollision(player, enemyBullet) {
         this.cameras.main.shake(200);
-        player.hit(1)      
+        player.hit(1)
 
         enemyBullet.destroy()
     }
