@@ -14,7 +14,7 @@ class Player extends Phaser.Physics.Arcade.Sprite {
     this.scene.add.existing(this);
     this.key = key;
 
-    this.life = 3
+    this.life = 10
     this.score = 0;
     this.level = 1;
     this.maxExp = 100
@@ -122,7 +122,6 @@ class Player extends Phaser.Physics.Arcade.Sprite {
   }
   updateLevel(level) {
     this.level += level;
-    console.log(this.level)
     if (this.level === 2) {
       this.doubleBullets = true
       this.fireRate = 350
@@ -141,7 +140,7 @@ class Player extends Phaser.Physics.Arcade.Sprite {
       this.damage = 3;
     }
     else if (this.level >= 6) {
-      this.life++;
+      this.life+=5;
     }
 
   }

@@ -16,6 +16,7 @@ class TitleScene extends Phaser.Scene {
     }
 
     create() {
+
         this.bg = new Background(this, 0, 0, this.game.config.width, this.game.config.height, "desert-backgorund", 0, 50)
         this.title = this.add.bitmapText(40, this.game.config.height / 2 - 300, 'vermin', 'Space \n Shooter', 128, 0);
 

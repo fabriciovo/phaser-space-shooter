@@ -21,7 +21,6 @@ class Enemy extends Phaser.Physics.Arcade.Sprite {
     this.bullets = undefined;
     this.animation()
 
-
     this.scene.time.addEvent({
       delay: 5000,
       callback: () => { 
@@ -34,6 +33,11 @@ class Enemy extends Phaser.Physics.Arcade.Sprite {
       timeScale: 1,
       paused: false
     });
+    this.flash = this.scene.plugins.get('rexFlash').add(this, {
+        duration: 50,
+        repeat: 5
+    });
+    
   }
 
   update() {
@@ -57,9 +61,11 @@ class Enemy extends Phaser.Physics.Arcade.Sprite {
     if (damegeValaue <= 0) {
       this._destroy()
     } else {
-
+      this.setTint(0xffffff)
       this.life = damegeValaue
     }
+
+
   }
 
   _destroy() {
@@ -69,31 +75,35 @@ class Enemy extends Phaser.Physics.Arcade.Sprite {
   }
 
   _flash() {
-    const startColor = Phaser.Display.Color.ValueToColor(0xffffff)
-    const endColor = Phaser.Display.Color.ValueToColor(0xff00000)
-    this.scene.tweens.add({
-      targets: this,
-      from: 0,
-      to: 100,
-      duration: 40,
-      yoyo: true,
-      ease: Phaser.Math.Easing.Sine.InOut,
-      onUpdate: tween => {
-        const value = tween.getValue();
-        const colorObject = Phaser.Display.Color.Interpolate.ColorWithColor(
-          startColor,
-          endColor,
-          100,
-          value
-        )
-        const color = Phaser.Display.Color.GetColor(
-          colorObject.r,
-          colorObject.g,
-          colorObject.b,
-        )
-        this.setTint(color)
-      }
-    })
+    this.flash.flash();
+    // this.flash = true;
+    // const startColor = Phaser.Display.Color.ValueToColor(0xffffff)
+    // const endColor = Phaser.Display.Color.ValueToColor(0xff00000)
+    // this.scene.tweens.add({
+    //   targets: this,
+    //   from: 0,
+    //   to: 100,
+    //   duration: 40,
+    //   yoyo: true,
+    //   loop:true,
+    //   ease: Phaser.Math.Easing.Sine.InOut,
+    //   onUpdate: tween => {
+    //     const value = tween.getValue();
+    //     const colorObject = Phaser.Display.Color.Interpolate.ColorWithColor(
+    //       startColor,
+    //       endColor,
+    //       100,
+    //       value
+    //     )
+    //     const color = Phaser.Display.Color.GetColor(
+    //       colorObject.r,
+    //       colorObject.g,
+    //       colorObject.b,
+    //     )
+    //     this.setTint(color)
+    //   }
+    // })
+
   }
 
 
