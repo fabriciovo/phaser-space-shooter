@@ -14,7 +14,7 @@ class Player extends Phaser.Physics.Arcade.Sprite {
     this.scene.add.existing(this);
     this.key = key;
 
-    this.life = 1;
+    this.life = 10;
     this.score = 0;
     this.level = 1;
     this.maxExp = 100;
