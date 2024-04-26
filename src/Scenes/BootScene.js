@@ -17,9 +17,6 @@ class BootScene extends Phaser.Scene {
 
 		//Font
 		this.load.bitmapFont('vermin', 'font/vermin.png', 'font/vermin.xml');
-
-
-
 	}
 
 	create() {
